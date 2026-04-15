@@ -78,7 +78,8 @@ class HarnessState:
     augmentations: list[str] = field(default_factory=list)
     verification: dict[str, Any] | None = None
 
-    def render_system_prefix(self, settings: HarnessSettings) -> str:
+    def render_system_prefix(self, settings: HarnessSettings | None = None) -> str:
+        settings = settings or HarnessSettings()
         parts: list[str] = []
         if self.plan:
             steps = " -> ".join(f"{i + 1}. {str(step)[:80]}" for i, step in enumerate(self.plan[:3]))
@@ -290,7 +291,12 @@ class ConfigurableHarness(AgentHarness):
         prefix = state.render_system_prefix(settings)
         if not prefix:
             return turn_ctx
-        return replace(turn_ctx, system_prompt=prefix + "\n\n" + getattr(turn_ctx, "system_prompt", ""))
+        updated_prompt = prefix + "\n\n" + getattr(turn_ctx, "system_prompt", "")
+        try:
+            return replace(turn_ctx, system_prompt=updated_prompt)
+        except TypeError:
+            setattr(turn_ctx, "system_prompt", updated_prompt)
+            return turn_ctx
 
     def _add_repair_hint(self, state: HarnessState, result: Any, verdict: dict[str, Any], settings: HarnessSettings) -> None:
         lines = [settings.repair_prefix]
