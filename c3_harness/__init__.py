@@ -34,6 +34,7 @@ Provider implementation:
 """
 
 from .core import (
+    AgentHarness,
     ConfigurableHarness,
     HarnessEvent,
     HarnessHooks,
@@ -43,9 +44,8 @@ from .core import (
     PRESETS,
 )
 from .integration import (
-    AgentHarness,
-    FullHarness,
     IntegrationHarness,
+    FullHarness,
     PlanningHarness,
     ReflectionHarness,
 )
@@ -58,6 +58,7 @@ from .provider import (
 
 __all__ = [
     # Core
+    "AgentHarness",
     "ConfigurableHarness",
     "HarnessEvent",
     "HarnessHooks",
@@ -66,7 +67,6 @@ __all__ = [
     "HarnessState",
     "PRESETS",
     # Integration
-    "AgentHarness",
     "IntegrationHarness",
     "PlanningHarness",
     "ReflectionHarness",
