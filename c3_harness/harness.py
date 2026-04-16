@@ -4,6 +4,11 @@ from __future__ import annotations
 
 from .core import (
     ConfigurableHarness,
+    HOOK_POINTS,
+    HookContext,
+    HookPoints,
+    HookRegistry,
+    ToolAuthorization,
     HarnessEvent,
     HarnessHooks,
     HarnessPolicy,
@@ -20,6 +25,11 @@ AgentHarness = CoreAgentHarness
 __all__ = [
     "AgentHarness",
     "ConfigurableHarness",
+    "HOOK_POINTS",
+    "HookContext",
+    "HookPoints",
+    "HookRegistry",
+    "ToolAuthorization",
     "HarnessEvent",
     "HarnessHooks",
     "HarnessPolicy",

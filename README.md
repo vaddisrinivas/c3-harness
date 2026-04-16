@@ -7,6 +7,7 @@ Configurable planning/execute/reflection harness for agent turns.
 - **Planning mode**: Generate execution plan before running tools
 - **Reflection mode**: Evaluate result and retry if incomplete
 - **Full mode**: Plan → execute → reflect → retry
+- **Hook-first extension model**: Add lifecycle, tool, context, and policy hooks
 - **Framework-agnostic**: Integrate with any agent framework
 - **Async-first**: Built for async/await patterns
 
@@ -132,6 +133,42 @@ harness = AgentHarness.from_config(
     hooks=hooks,
 )
 ```
+
+## Hook Registry
+
+```python
+from c3_harness import HarnessHooks, HarnessSettings, HookRegistry, HOOK_POINTS, ToolAuthorization
+
+registry = HookRegistry()
+
+# Context hook
+registry.register(
+    HOOK_POINTS.augment_system_prompt,
+    lambda ctx: "Prefer calling MCP tools before local fallbacks.",
+    priority=10,
+)
+
+# Policy hook
+def authorize(ctx):
+    tool = ctx.payload.get("tool_name", "")
+    if tool == "send_email":
+        return ToolAuthorization(allow=False, reason="email disabled in this environment")
+    return ToolAuthorization(allow=True)
+
+registry.register(HOOK_POINTS.authorize_tool_call, authorize, priority=5)
+
+hooks = HarnessHooks(
+    get_settings=lambda: HarnessSettings(),
+    get_planner_model=lambda: "gpt-4o-mini",
+    hook_registry=registry,
+)
+```
+
+Available hook points include:
+- `before_turn`, `before_plan`, `after_plan`, `before_execute`, `after_execute`, `before_reflect`, `after_reflect`, `on_error`, `on_event`
+- `before_tool_call`, `after_tool_call`, `on_tool_error`
+- `augment_system_prompt`, `augment_user_prompt`, `filter_tools`, `inject_turn_metadata`
+- `authorize_tool_call`, `redact_for_model`, `redact_for_logs`
 
 ## License
 

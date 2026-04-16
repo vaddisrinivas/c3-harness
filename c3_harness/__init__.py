@@ -36,6 +36,11 @@ Provider implementation:
 from .core import (
     AgentHarness,
     ConfigurableHarness,
+    HOOK_POINTS,
+    HookContext,
+    HookPoints,
+    HookRegistry,
+    ToolAuthorization,
     HarnessEvent,
     HarnessHooks,
     HarnessPolicy,
@@ -62,6 +67,11 @@ __all__ = [
     # Core
     "AgentHarness",
     "ConfigurableHarness",
+    "HOOK_POINTS",
+    "HookContext",
+    "HookPoints",
+    "HookRegistry",
+    "ToolAuthorization",
     "HarnessEvent",
     "HarnessHooks",
     "HarnessPolicy",
