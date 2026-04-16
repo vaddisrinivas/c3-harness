@@ -1,6 +1,6 @@
 # c3-harness
 
-Configurable planning/execute/reflection harness for agent turns. Extracted from [c3-py](https://github.com/vaddisrinivas/c3-py) for standalone use.
+Configurable planning/execute/reflection harness for agent turns.
 
 ## Features
 
@@ -15,7 +15,7 @@ Configurable planning/execute/reflection harness for agent turns. Extracted from
 ```bash
 pip install c3-harness
 # Or for development:
-uv pip install -e ~/projects/harness
+uv pip install -e /path/to/harness
 ```
 
 ## Quick Start

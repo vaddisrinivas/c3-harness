@@ -55,6 +55,8 @@ from .provider import (
     HarnessProviderConfig,
     HarnessProviderFactory,
 )
+from .c3_runtime import C3HarnessRuntime
+from .harness_manager import HarnessManager
 
 __all__ = [
     # Core
@@ -76,4 +78,6 @@ __all__ = [
     "HarnessProviderConfig",
     "HarnessCapabilities",
     "HarnessProviderFactory",
+    "C3HarnessRuntime",
+    "HarnessManager",
 ]
